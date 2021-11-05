@@ -109,7 +109,7 @@ const mdTheme = createTheme({
 });
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(window.innerWidth > 1024);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -169,7 +169,7 @@ function DashboardContent() {
           <Divider />
           <List>{mainListItems}</List>
           <Divider />
-          <List style={{marginTop:'auto'}}>{secondaryListItems}</List>
+          <List style={{ marginTop: 'auto' }}>{secondaryListItems}</List>
         </Drawer>
         <Box
           component="main"
