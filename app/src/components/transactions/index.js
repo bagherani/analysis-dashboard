@@ -1,86 +1,134 @@
-import * as React from 'react';
+import { useEffect, Fragment, useRef } from 'react';
 import Link from '@mui/material/Link';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Title from '../title';
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
+import { connect } from 'react-redux';
+import { insertTransactions, setIsLoading } from '../../actions/transaction-actions';
+import Web3 from 'web3';
+import { WS_ENDPOINT, CONTRACT_ADDRESS } from '../../constants';
+import abi from '../../abi';
+import { DataGrid } from '@mui/x-data-grid';
+import { Contract } from 'web3-eth-contract';
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Transactions() {
+function Transactions(props) {
+  const contractRef = useRef(null);
+
+  useEffect(() => {
+    let subscriptionHandler = null;
+
+    if (contractRef.current == null) {
+      var w3 = new Web3(WS_ENDPOINT);
+      contractRef.current = new w3.eth.Contract(abi, CONTRACT_ADDRESS);
+      /**
+       * @type {Contract}
+       */
+      const contract = contractRef.current;
+
+      props.setIsLoading(true);
+      contract.getPastEvents('Swapped', {
+        fromBlock: '20735669',
+
+      }, (error, eventData) => {
+        if (error)
+          console.log(error)
+      })
+        .then((events) => {
+          console.log(events);
+          props.insertTransactions(events);
+        }).catch(ex => {
+          console.log(ex);
+        })
+
+      subscriptionHandler = contract.events.Swapped((error, event) => {
+        if (error) {
+          console.log(error);
+        }
+      })
+        .on("connected", function (subscriptionId) {
+          console.log('subscriptionId:', subscriptionId);
+        })
+        .on("data", function (blockHeader) {
+          console.log(blockHeader);
+          props.insertTransactions(blockHeader);
+        })
+        .on("error", console.error);
+    }
+
+    return () => {
+      if (subscriptionHandler && typeof subscriptionHandler.unsubscribe === 'function')
+        subscriptionHandler.unsubscribe((error, success) => { })
+    }
+  });
+
+  const columns = [
+    { field: 'blockNumber', headerName: 'Block Number', width: 150 },
+    {
+      field: 'userAddress', headerName: 'User Address', width: 150,
+      valueGetter: (params) => {
+        if (params.row)
+          return params.row.returnValues["userAddress"];
+        return ""
+      }
+    },
+    {
+      field: 'fromToken', headerName: 'From Token', width: 150,
+      valueGetter: (params) => {
+        if (params.row)
+          return params.row.returnValues["fromToken"];
+        return ""
+      }
+    },
+    {
+      field: 'toToken', headerName: 'To Token', width: 150,
+      valueGetter: (params) => {
+        if (params.row)
+          return params.row.returnValues["toToken"];
+        return ""
+      }
+    },
+    {
+      field: 'amount', headerName: 'Amount', width: 200,
+      valueGetter: (params) => {
+        if (params.row)
+          return params.row.returnValues["amountOut"];
+        return ""
+      }
+    },
+    {
+      field: 'transactionHash', headerName: 'Transaction Hash',
+      flex: 1
+    },
+  ];
+
+
   return (
-    <React.Fragment>
+    <Fragment>
       <Title>Recent Transactions</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div style={{ height: 500, width: '100%' }}>
+        <DataGrid
+          sortModel={[{ field: "blockNumber", sort: "desc" }]}
+          loading={props.isLoading}
+          rows={props.list}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          disableSelectionOnClick
+        />
+      </div>
       <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
         See more orders
       </Link>
-    </React.Fragment>
+    </Fragment>
   );
 }
+
+export default connect(
+  state => state.transactions,
+  dispatch => ({
+    insertTransactions: (data) => dispatch(insertTransactions(data)),
+    setIsLoading: (data) => dispatch(setIsLoading(data)),
+  })
+)(Transactions);

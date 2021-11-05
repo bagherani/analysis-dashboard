@@ -4,11 +4,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -34,19 +29,19 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Follow Us On</ListSubheader>
-    <ListItem button>
+    <ListItem button component="a" href="#">
       <ListItemIcon>
         <TwitterIcon />
       </ListItemIcon>
       <ListItemText primary="Twitter" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href="#">
       <ListItemIcon>
         <FacebookIcon />
       </ListItemIcon>
       <ListItemText primary="Facebook" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href="#">
       <ListItemIcon>
         <GitHubIcon />
       </ListItemIcon>

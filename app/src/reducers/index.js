@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import transactionsReducer from './transactions-reducer'
+import transactions from './transactions-reducer'
 
 const appReducer = combineReducers({
-    transactionsReducer
+    transactions
 })
 
 const compbinedReducers = (state, action) => {
