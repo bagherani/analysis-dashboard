@@ -14,18 +14,18 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-function Transactions(props) {
+function Transactions({ setIsLoading, insertTransactions, isLoading, list }) {
   const contractRef = useRef(null);
 
   useEffect(() => {
     let subscriptionHandler = null;
 
     if (contractRef.current == null) {
-      var w3 = new Web3(WS_ENDPOINT);
+      let w3 = new Web3(WS_ENDPOINT);
       contractRef.current = new w3.eth.Contract(abi, CONTRACT_ADDRESS);
       const contract = contractRef.current;
 
-      props.setIsLoading(true);
+      setIsLoading(true);
       contract.getPastEvents('Swapped', {
         fromBlock: '20735669',
 
@@ -35,7 +35,7 @@ function Transactions(props) {
       })
         .then((events) => {
           console.log(events);
-          props.insertTransactions(events);
+          insertTransactions(events);
         }).catch(ex => {
           console.log(ex);
         });
@@ -50,7 +50,7 @@ function Transactions(props) {
         })
         .on('data', function (blockHeader) {
           console.log(blockHeader);
-          props.insertTransactions(blockHeader);
+          insertTransactions(blockHeader);
         })
         .on('error', console.error);
     }
@@ -101,15 +101,14 @@ function Transactions(props) {
     },
   ];
 
-
   return (
     <Fragment>
       <Title>Recent Transactions</Title>
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid
           sortModel={[{ field: 'blockNumber', sort: 'desc' }]}
-          loading={props.isLoading}
-          rows={props.list}
+          loading={isLoading}
+          rows={list}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10]}
@@ -124,10 +123,10 @@ function Transactions(props) {
 }
 
 Transactions.propTypes = {
-  isLoading:PropTypes.bool,
-  list:PropTypes.array,
-  insertTransactions:PropTypes.func,
-  setIsLoading:PropTypes.func
+  isLoading: PropTypes.bool,
+  list: PropTypes.array,
+  insertTransactions: PropTypes.func,
+  setIsLoading: PropTypes.func
 };
 
 export default connect(
