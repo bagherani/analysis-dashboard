@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+import React from 'react';
 import { useEffect, Fragment, useRef } from 'react';
 import Link from '@mui/material/Link';
 import Title from '../title';
@@ -7,7 +9,6 @@ import Web3 from 'web3';
 import { WS_ENDPOINT, CONTRACT_ADDRESS } from '../../constants';
 import abi from '../../abi';
 import { DataGrid } from '@mui/x-data-grid';
-import { Contract } from 'web3-eth-contract';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -22,45 +23,42 @@ function Transactions(props) {
     if (contractRef.current == null) {
       var w3 = new Web3(WS_ENDPOINT);
       contractRef.current = new w3.eth.Contract(abi, CONTRACT_ADDRESS);
-      /**
-       * @type {Contract}
-       */
       const contract = contractRef.current;
 
       props.setIsLoading(true);
       contract.getPastEvents('Swapped', {
         fromBlock: '20735669',
 
-      }, (error, eventData) => {
+      }, (error) => {
         if (error)
-          console.log(error)
+          console.log(error);
       })
         .then((events) => {
           console.log(events);
           props.insertTransactions(events);
         }).catch(ex => {
           console.log(ex);
-        })
+        });
 
-      subscriptionHandler = contract.events.Swapped((error, event) => {
+      subscriptionHandler = contract.events.Swapped((error) => {
         if (error) {
           console.log(error);
         }
       })
-        .on("connected", function (subscriptionId) {
+        .on('connected', function (subscriptionId) {
           console.log('subscriptionId:', subscriptionId);
         })
-        .on("data", function (blockHeader) {
+        .on('data', function (blockHeader) {
           console.log(blockHeader);
           props.insertTransactions(blockHeader);
         })
-        .on("error", console.error);
+        .on('error', console.error);
     }
 
     return () => {
       if (subscriptionHandler && typeof subscriptionHandler.unsubscribe === 'function')
-        subscriptionHandler.unsubscribe((error, success) => { })
-    }
+        subscriptionHandler.unsubscribe((/*error, success*/) => { });
+    };
   });
 
   const columns = [
@@ -69,32 +67,32 @@ function Transactions(props) {
       field: 'userAddress', headerName: 'User Address', width: 150,
       valueGetter: (params) => {
         if (params.row)
-          return params.row.returnValues["userAddress"];
-        return ""
+          return params.row.returnValues['userAddress'];
+        return '';
       }
     },
     {
       field: 'fromToken', headerName: 'From Token', width: 150,
       valueGetter: (params) => {
         if (params.row)
-          return params.row.returnValues["fromToken"];
-        return ""
+          return params.row.returnValues['fromToken'];
+        return '';
       }
     },
     {
       field: 'toToken', headerName: 'To Token', width: 150,
       valueGetter: (params) => {
         if (params.row)
-          return params.row.returnValues["toToken"];
-        return ""
+          return params.row.returnValues['toToken'];
+        return '';
       }
     },
     {
       field: 'amount', headerName: 'Amount', width: 200,
       valueGetter: (params) => {
         if (params.row)
-          return params.row.returnValues["amountOut"];
-        return ""
+          return params.row.returnValues['amountOut'];
+        return '';
       }
     },
     {
@@ -109,7 +107,7 @@ function Transactions(props) {
       <Title>Recent Transactions</Title>
       <div style={{ height: 500, width: '100%' }}>
         <DataGrid
-          sortModel={[{ field: "blockNumber", sort: "desc" }]}
+          sortModel={[{ field: 'blockNumber', sort: 'desc' }]}
           loading={props.isLoading}
           rows={props.list}
           columns={columns}
@@ -124,6 +122,13 @@ function Transactions(props) {
     </Fragment>
   );
 }
+
+Transactions.propTypes = {
+  isLoading:PropTypes.bool,
+  list:PropTypes.array,
+  insertTransactions:PropTypes.func,
+  setIsLoading:PropTypes.func
+};
 
 export default connect(
   state => state.transactions,

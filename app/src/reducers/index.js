@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import transactions from './transactions-reducer'
+import transactions from './transactions-reducer';
 
 const appReducer = combineReducers({
-    transactions
-})
+  transactions
+});
 
 const compbinedReducers = (state, action) => {
-    return appReducer(state, action);
+  return appReducer(state, action);
 };
 
 export default compbinedReducers;

@@ -1,15 +1,15 @@
 const initialState = {
-    /**
+  /**
      * smart contract transactions on the chain
      */
-    transactions: {
-        /**
+  transactions: {
+    /**
          * @type {Array<{name:string}>}
          */
-        list: [],
-        isLoading: false,
-        error: null
-    }
+    list: [],
+    isLoading: false,
+    error: null
+  }
 };
 
 export default initialState;
