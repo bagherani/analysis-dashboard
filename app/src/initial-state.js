@@ -1,8 +1,8 @@
 const initialState = {
   /**
-     * smart contract transactions on the chain
+     * smart contract price feed on the chain
      */
-  transactions: {
+  priceFeed: {
     /**
          * @type {Array<{name:string}>}
          */

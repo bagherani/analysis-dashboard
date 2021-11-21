@@ -1,0 +1,22 @@
+.site-nav{
+  ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li{
+      list-style: none;
+      padding: 8px 0;
+
+      a{
+        color:#fff;
+        opacity: .7;
+        img{
+          width:30px;
+          height:30px;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}

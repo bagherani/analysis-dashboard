@@ -1,0 +1,10 @@
+@import "../colors";
+
+.site-header{
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 8px 15px 8px 15px;
+    border-radius: 18px;
+    border: solid 1px $border-color;
+    background-image: linear-gradient(270deg, $primary 50%, #000);
+}

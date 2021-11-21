@@ -1,25 +1,58 @@
-body{
-    margin: 0;
+/* make the customizations */
+$theme-colors: (
+    "info": tomato,
+    "danger": teal
+);
+
+/* import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+@import "_colors";
+
+html, body{
+    min-height:100vh;
 }
 
+body{
+    background:url('./bg-pattern.png'), linear-gradient(#000, $primary);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center bottom;
+}
+
+a, a:hover, a:visited, a:focus, a:active{
+    text-decoration: none;
+}
 
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #e0e1e4;
+    background: $primary;
+    background: linear-gradient($primary, #90742F);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #8b8b8e;
+    border-radius: 4px;
+    background: #9A752A;
 
     &:hover {
-        background: #6c6c83;
+        background:lighten($border-color, 5);
     }
 }
 
-body, html {
-    -webkit-scrollbar-width: thin;
-    scrollbar-width: thin;
+.app-button{
+    border: 0 none;
+    background: none;
+    color:#fff;
+    padding: 8px 13px 8px;
+    border-radius: 25px;
+    border: solid 1px $border-color;
+    background-image: linear-gradient(90deg, lighten($primary, 10), transparent)
 }
+
+.app-page-title{
+    color:#fff;
+    font-size: 18pt;
+}
+
