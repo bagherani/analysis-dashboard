@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Header from './header';
-import Nav from './nav';
+import Header from './shared/header';
+import Nav from './shared/nav';
 import Pages from './pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,10 +15,10 @@ function App() {
     <Container>
       <Header />
       <Row>
-        <Col lg="3">
+        <Col lg="2">
           <Nav />
         </Col>
-        <Col lg="9">
+        <Col lg="10">
           <Pages />
         </Col>
       </Row>

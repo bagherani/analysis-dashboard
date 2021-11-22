@@ -1,15 +1,41 @@
+@import "_colors";
+
 /* make the customizations */
-$theme-colors: (
-    "info": tomato,
-    "danger": teal
+// $theme-colors: (
+//     "info": tomato,
+//     "danger": teal
+// );
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1366px,
+  xxl: 1600px,
+  xxxl: 1920px
 );
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1280px,
+  xxl: 1400px,
+  xxxl: 1800px,
+);
+
+$green:   #1de9b6 !default;
+$red:   red !default;
+$yellow : #b9953d;
+
+$dropdown-dark-bg: $primary;
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
-@import "_colors";
 
 html, body{
-    min-height:100vh;
+    min-height:100%;
 }
 
 body{
@@ -17,6 +43,8 @@ body{
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center bottom;
+    background-attachment: fixed;
+    color:#fff;
 }
 
 a, a:hover, a:visited, a:focus, a:active{
@@ -48,7 +76,38 @@ a, a:hover, a:visited, a:focus, a:active{
     padding: 8px 13px 8px;
     border-radius: 25px;
     border: solid 1px $border-color;
-    background-image: linear-gradient(90deg, lighten($primary, 10), transparent)
+    background-image: linear-gradient(90deg, lighten($primary, 10), transparent);
+    &.sm{
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    &:hover, &:focus, &:active{
+        outline: none;
+        color: #fff;
+        box-shadow: 0 0 0 3px rgba($primary, .4);
+    }
+}
+
+.app-button-flat{
+    padding: 4px;
+    border: 0 none;
+    background: none;
+    color:#fff;
+    margin-left: 15px;
+    border-radius: 8px;
+    
+    &.active{
+        color : $border-color;
+        img{
+            filter: brightness(90%) sepia(100) saturate(90) hue-rotate(336deg);
+        }
+    }
+    
+    &:hover, &:focus, &:active{
+        outline: none;
+        box-shadow: 0 0 0 3px rgba($primary, .4);
+    }
 }
 
 .app-page-title{
@@ -56,3 +115,92 @@ a, a:hover, a:visited, a:focus, a:active{
     font-size: 18pt;
 }
 
+.app-text-info{
+    color:#b9953d;
+}
+
+.app-input{
+    background-color: transparent;
+    border: solid 1px $border-color;
+    border-radius: 25px;
+    color:#b9953d;
+
+    &:focus{
+        background-color: transparent;
+        border: solid 1px $border-color;
+        box-shadow: 0 0 0px 3px rgba(#b9953d,.4);
+        color:#b9953d;
+    }
+
+    &::placeholder{
+        color:#b9953d;
+    }
+
+    &::-moz-placeholder{
+        color:#b9953d;
+    }
+
+    &::-webkit-input-placeholder{
+        color:#b9953d;
+    }
+}
+
+/* override bootstrap paging styles*/
+.app-paging{
+    .page-item{
+        .page-link {
+            position: relative;
+            display: block;
+            color:#fff;
+            text-decoration: none;
+            background-color: rgba($border-color,.2);
+            border: 1px solid $border-color;
+            border-radius: 50% !important;
+            transition: none;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+
+            &:focus {
+                z-index: 3;
+                color: #fff;
+                background-color: rgba($border-color,.2);
+                outline: 0;
+                box-shadow: 0 0 0 3px rgba($border-color,.2);
+            }
+
+            &:not([title="first"]):not([title="last"]):not([title="previous"]):not([title="next"]){
+                background-color: transparent;
+                border-color:transparent;
+            }
+        }
+
+        &:first-child .page-link {
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        &:not(:first-child) .page-link {
+            margin-left: -1px;
+        }
+
+        &.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: darken($primary, 5) !important;
+            border-color: $border-color !important;
+        }
+
+        &.disabled .page-link {
+            background-color: rgba($border-color,.1);
+            color: #000;
+            pointer-events: none;
+            border-color: transparent;
+        }
+
+    }
+
+}

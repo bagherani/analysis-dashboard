@@ -9,6 +9,7 @@ import reducer from './reducers';
 import initialState from './initial-state';
 
 import App from './components/app';
+import { BrowserRouter } from 'react-router-dom';
 
 const middleware = [thunk];
 
@@ -17,7 +18,9 @@ const store = createStore(reducer, initialState, composeEnhancers(applyMiddlewar
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

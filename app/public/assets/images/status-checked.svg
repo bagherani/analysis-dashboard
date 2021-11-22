@@ -1,0 +1,15 @@
+<svg id="offline_pin_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #ebba43;
+      }
+    </style>
+  </defs>
+  <path id="Path_363" data-name="Path 363" class="cls-1" d="M0,0H24V24H0Z"/>
+  <path id="Path_364" data-name="Path 364" class="cls-2" d="M12,2A10,10,0,1,0,22,12,10.029,10.029,0,0,0,12,2Zm4,16H8a1,1,0,0,1,0-2h8a1,1,0,0,1,0,2ZM9.59,13.29,7.7,11.4A.99.99,0,0,1,9.1,10l1.2,1.2,4.6-4.6A.99.99,0,0,1,16.3,8l-5.29,5.29a1.008,1.008,0,0,1-1.42,0Z"/>
+</svg>
