@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export default function PriceFeedListItem() {
   return (
-    <div className="app-list-item">
+    <div className="app-price-list-item">
       <div>
         <img src="/assets/images/coins/btc.svg" width="36" height="36" />
         <span>BTC/USD</span>

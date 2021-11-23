@@ -38,7 +38,7 @@ export default function PriceFeed() {
         </Col>
         <Col lg="6" className="text-end">
 
-          <Dropdown className="d-inline-block me-2">
+          <Dropdown className="d-inline-block me-2" drop="up">
             <Dropdown.Toggle variant="" id="dropdown-basic" className="app-button sm">
               24
             </Dropdown.Toggle>

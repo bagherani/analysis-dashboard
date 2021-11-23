@@ -4,6 +4,7 @@ import Nav from './shared/nav';
 import Pages from './pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import './app.scss';
 
 import { Col, Container, Row } from 'react-bootstrap';

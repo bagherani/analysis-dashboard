@@ -2,7 +2,7 @@
 
 import initialState from '../initial-state';
 
-const transactions = (state = initialState.priceFeed, action) => {
+const transactions = (state = initialState.transactions, action) => {
   switch (action.type) {
   case 0:
     // return {
