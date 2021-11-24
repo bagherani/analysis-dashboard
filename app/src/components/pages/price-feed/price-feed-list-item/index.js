@@ -4,7 +4,7 @@ export default function PriceFeedListItem() {
   return (
     <div className="app-price-list-item">
       <div>
-        <img src="/assets/images/coins/btc.svg" width="36" height="36" />
+        <img src="/assets/images/coins/btc.svg" width="36" height="36" className="me-2" />
         <span>BTC/USD</span>
       </div>
       <div>

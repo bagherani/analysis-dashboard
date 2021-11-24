@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap';
 
 export default function PriceFeedTableCell() {
   return (
-    <Col lg="4" className="px-1">
+    <Col lg="6" xl="4" sm="12" className="px-1">
       <div className="app-table-cell d-flex flex-row">
         <div className="w-50 h-100 d-flex flex-column">
           <div>

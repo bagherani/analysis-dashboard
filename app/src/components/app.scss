@@ -78,6 +78,13 @@ a:active {
     pointer-events: none;
 }
 
+.app-logo {
+    @media screen and (max-width: 720px) {
+        width: 36px;
+        width: 36px;
+    }
+}
+
 .app-button {
     border: 0 none;
     background: none;
@@ -98,6 +105,11 @@ a:active {
         color: #fff;
         box-shadow: 0 0 0 3px rgba($primary, 0.4);
     }
+
+    @media screen and (max-width: 720px) {
+        padding: 6px 8px 6px;
+        font-size: 0.8em;
+    }
 }
 
 .app-button-flat {
@@ -105,7 +117,6 @@ a:active {
     border: 0 none;
     background: none;
     color: #fff;
-    margin-left: 15px;
     border-radius: 8px;
 
     &.active {
@@ -123,9 +134,21 @@ a:active {
     }
 }
 
+.app-page-title-container {
+    @media screen and (min-width: 720) and (max-width: 1024px) {
+        position: absolute;
+        width: 60%;
+        left: 40%;
+        top: 0;
+    }
+}
+
 .app-page-title {
     color: #fff;
     font-size: 18pt;
+    @media screen and (min-width: 720) and (max-width: 1024px) {
+        margin-top: 50px;
+    }
 }
 
 .app-text-info {

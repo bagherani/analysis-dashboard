@@ -1,18 +1,22 @@
 import './header.scss';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
-export default function Header() {
+function Header({ toggleMenu }) {
   return (
-    <div className="site-header">
+    <div className="app-header">
       <Row className="align-items-center">
-        <Col sm="12" lg="6">
-          <a href="/" className="d-inline-block">
-            <img src="/assets/images/logo.svg" width="64" height="56" />
-            <img src="/assets/images/logo-title.svg" className="ms-3" width="135" height="23" />
+        <Col xs="6">
+          <button className="app-button-flat d-xl-none d-inline-block px-1" onClick={() => { toggleMenu && toggleMenu(); }}>
+            <img src="/assets/images/menu-handler.svg" width="18" height="18" />
+          </button>
+          <a href="/" className="d-inline-block ms-2">
+            <img src="/assets/images/logo.svg" className="app-logo" width="64" height="56" />
+            <img src="/assets/images/logo-title.svg" className="ms-3 d-none d-lg-inline-block" width="135" height="23" />
           </a>
         </Col>
-        <Col sm="12" lg="6" className="text-end">
+        <Col xs="6" className="text-end">
           <a href="#">
             <img src="/assets/images/cog.svg" width="27" height="28" />
           </a>
@@ -22,3 +26,9 @@ export default function Header() {
     </div>
   );
 }
+
+Header.propTypes = {
+  toggleMenu: PropTypes.func
+};
+
+export default Header;

@@ -9,8 +9,13 @@ export default function ArbitrageList() {
   let [state, setState] = useState({ isLoadingFake: true });
 
   React.useEffect(() => {
-    setTimeout(() => { setState({ ...state, isLoadingFake: false }); }, 1000);
-  });
+    let timeOut = setTimeout(() => { setState({ ...state, isLoadingFake: false }); }, 1000);
+
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, []);
+
 
   return (
     <>

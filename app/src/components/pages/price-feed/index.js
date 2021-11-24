@@ -10,23 +10,22 @@ export default function PriceFeed() {
 
   return (
     <div>
-      <Row>
-        <Col lg='8'>
+      <Row className="app-page-title-container">
+        <Col lg="12" xl="8" className="order-xl-0 order-lg-1 order-0 mt-3 mt-lg-0">
           <h1 className="app-page-title">
             <img src="/assets/images/page-crypto-price-feed.svg" width="48" height="48" alt="crypto logo" className="me-2" />
             &nbsp;Cryptocurrency Price Feed
           </h1>
         </Col>
-        <Col lg="4" className="text-end">
-          <button className="app-button-flat" aria-label="show in percent"><img src="/assets/images/percent.svg" width="22" height="22" alt="price" /></button>
-          <button className="app-button-flat" aria-label="show in dollar"><img src="/assets/images/price.svg" width="22" height="22" alt="price" /></button>
-          <button onClick={() => { setState({ ...state, isGridView: false }); }} className={`app-button-flat ${!state.isGridView ? 'active' : ''}`} aria-label="show in list view"><img src="/assets/images/list.svg" width="22" height="22" alt="price" /></button>
+        <Col lg="12" xl="4" className="text-end order-xl-1 order-lg-0 order-1">
+          <button className="app-button-flat me-2" aria-label="show in percent"><img src="/assets/images/percent.svg" width="22" height="22" alt="price" /></button>
+          <button className="app-button-flat me-2" aria-label="show in dollar"><img src="/assets/images/price.svg" width="22" height="22" alt="price" /></button>
+          <button onClick={() => { setState({ ...state, isGridView: false }); }} className={`app-button-flat me-2 ${!state.isGridView ? 'active' : ''}`} aria-label="show in list view"><img src="/assets/images/list.svg" width="22" height="22" alt="price" /></button>
           <button onClick={() => { setState({ ...state, isGridView: true }); }} className={`app-button-flat ${state.isGridView ? 'active' : ''}`} aria-label="show in grid view"><img src="/assets/images/grid.svg" width="22" height="22" alt="price" /></button>
         </Col>
       </Row>
 
-      <Form.Group controlId="priceFeedTableSearch" className="mb-3 mt-3">
-        <Form.Label>Name</Form.Label>
+      <Form.Group controlId="priceFeedTableSearch" className="mb-3 mt-xl-3 mt-4">
         <Form.Control type="search" name="priceFeedTableSearch" placeholder="Enter the name" className="app-input w-25" />
       </Form.Group>
 
@@ -36,8 +35,7 @@ export default function PriceFeed() {
         <Col lg="6">
           <Paging count={70} currentPage={3} pageSize={24} />
         </Col>
-        <Col lg="6" className="text-end">
-
+        <Col lg="6" className="text-lg-end">
           <Dropdown className="d-inline-block me-2" drop="up">
             <Dropdown.Toggle variant="" id="dropdown-basic" className="app-button sm">
               24
