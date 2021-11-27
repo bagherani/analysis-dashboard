@@ -3,7 +3,8 @@ const initialState = {
     providers: [],
     list: [],
     isLoading: false,
-    error: null
+    error: null,
+    count: 0,
   }
 };
 

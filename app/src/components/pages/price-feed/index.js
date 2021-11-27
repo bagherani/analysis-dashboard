@@ -7,15 +7,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProviders, getTokenPrices } from '../../../actions/pricefeed-actions';
 
-function PriceFeed({ providers, list, getProviders, getTokenPrices }) {
+function PriceFeed({ getProviders, getTokenPrices, providers, list, count}) {
   const [state, setState] = useState({ isGridView: true });
 
-  useEffect(async () => {
-    await getProviders();
+  useEffect(() => {
+    getProviders();
 
-    let fetchDataInterval = setInterval(async () => {
-      await getTokenPrices();
-      console.log(list);
+    
+    let fetchDataInterval = setInterval(() => {
+      getTokenPrices();
     }, 10000);
 
     return () => {
@@ -78,6 +78,8 @@ function PriceFeed({ providers, list, getProviders, getTokenPrices }) {
 
   return (
     <div>
+      count: {count}
+      {Array.isArray(list) && list.map((x, idx) => (<div key={idx}>{x.name}</div>))}
       <Row className="app-page-title-container">
         <Col lg="12" xl="8" className="order-xl-0 order-lg-1 order-0 mt-3 mt-lg-0">
           <h1 className="app-page-title">
@@ -110,6 +112,7 @@ PriceFeed.propTypes = {
   providers: PropTypes.array,
   getTokenPrices: PropTypes.func,
   list: PropTypes.array,
+  count: PropTypes.number
 };
 
 export default connect(

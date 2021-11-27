@@ -25,7 +25,7 @@ function PriceFeedTableCell({ providers }) {
         <div className="w-50 h-100 mt-2">
           <span className="text-warning">Data Providers</span>
           <ul className="mt-2">
-            {providers.map(provider => (
+            {Array.isArray(providers) && providers.map(provider => (
               <li className="d-inline-block" key={provider.title}>
                 <a href="#" title={provider.title}>
                   <img src={provider.icon} width="32" height="32" />

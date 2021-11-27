@@ -28,10 +28,7 @@ export const getTokenPrices = (/*symbol, skip, take*/) => async dispatch => {
   dispatch({ type: ACTIONS.GET_TOKEN_PRICE_BEGIN });
 
   try {
-    let result = await axios.get(API_TOKEN_PRICE, axios.defaults);
-
-    if (result.status != 200)
-      throw result.statusText;
+    let result = await axios.get(API_TOKEN_PRICE + '?limit=10', axios.defaults);
 
     dispatch({ type: ACTIONS.GET_TOKEN_PRICE_DONE, payload: result.data });
 
