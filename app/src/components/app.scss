@@ -61,17 +61,22 @@ a:active {
 }
 
 ::-webkit-scrollbar-track {
-    background: $primary;
-    background: linear-gradient($primary, #90742f);
+    background: rgba($border-color, 0.8);
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background: #9a752a;
+    background: lighten($border-color, 5);
 
     &:hover {
-        background: lighten($border-color, 5);
+        background: lighten($border-color, 10);
     }
+}
+
+.table-responsive::-webkit-scrollbar:horizontal {
+    width: auto;
+    height: 8px;
 }
 
 .app-pointer-event-none {
@@ -167,7 +172,7 @@ a:active {
     &:focus {
         background-color: transparent;
         border: solid 1px $border-color;
-        box-shadow: 0 0 0px 3px rgba(#b9953d, 0.4);
+        box-shadow: 0 0 0px 2px rgba(#b9953d, 0.4);
         color: #b9953d;
     }
 

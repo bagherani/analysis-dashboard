@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
-export default function PriceFeedTableCell() {
+function PriceFeedTableCell({ providers }) {
   return (
     <Col lg="6" xl="4" sm="12" className="px-1">
       <div className="app-table-cell d-flex flex-row">
@@ -24,10 +25,10 @@ export default function PriceFeedTableCell() {
         <div className="w-50 h-100 mt-2">
           <span className="text-warning">Data Providers</span>
           <ul className="mt-2">
-            {Array.from(Array(10).keys()).map(key => (
-              <li className="d-inline-block" key={key}>
-                <a href="#">
-                  <img src="/assets/images/providers/uniswap.svg" width="30" height="30" />
+            {providers.map(provider => (
+              <li className="d-inline-block" key={provider.title}>
+                <a href="#" title={provider.title}>
+                  <img src={provider.icon} width="32" height="32" />
                 </a>
               </li>
             ))}
@@ -37,3 +38,10 @@ export default function PriceFeedTableCell() {
     </Col>
   );
 }
+
+
+PriceFeedTableCell.propTypes = {
+  providers: PropTypes.array
+};
+
+export default PriceFeedTableCell;

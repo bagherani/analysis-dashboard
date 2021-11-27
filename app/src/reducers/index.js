@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import transactions from './transactions-reducer';
+import priceFeed from './pricefeed-reducer';
 
 const appReducer = combineReducers({
-  transactions
+  priceFeed
 });
 
 const compbinedReducers = (state, action) => {

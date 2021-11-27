@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import reducer from '../reducers';
 import initialState from '../initial-state';
 import { applyMiddleware, createStore, compose } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
 
 const middleware = [thunk];
 
@@ -14,7 +15,9 @@ const store = createStore(reducer, initialState, compose(applyMiddleware(...midd
 
 test('renders the app', () => {
   const app = (<Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>);
 
   render(app);

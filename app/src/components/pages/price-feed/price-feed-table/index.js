@@ -4,13 +4,14 @@ import { Row } from 'react-bootstrap';
 import PriceFeedTableCell from '../price-feed-table-cell';
 import './price-feed-table.scss';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import PropTypes from 'prop-types';
 
-export default function PriceFeedTable() {
+function PriceFeedTable({ providers }) {
   let [state, setState] = useState({ isLoadingFake: true });
 
   React.useEffect(() => {
     let timeOut = setTimeout(() => { setState({ ...state, isLoadingFake: false }); }, 1000);
-    
+
     return () => {
       clearTimeout(timeOut);
     };
@@ -25,7 +26,7 @@ export default function PriceFeedTable() {
           (
             <Row className="px-2">
               {Array.from(Array(6).keys()).map(key => (
-                <PriceFeedTableCell key={key} />
+                <PriceFeedTableCell key={key} providers={providers} />
               ))}
             </Row>
           )
@@ -33,3 +34,9 @@ export default function PriceFeedTable() {
     </>
   );
 }
+
+PriceFeedTable.propTypes = {
+  providers: PropTypes.array
+};
+
+export default PriceFeedTable;

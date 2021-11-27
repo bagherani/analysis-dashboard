@@ -1,7 +1,11 @@
-import initialState from './initial-state'
+import initialState from './initial-state';
+
 describe("initial state evaluation", () => {
+
     test("should initial state be healthy", () => {
         const keys = Object.keys(initialState);
-        expect(['priceFeed']).toEqual(keys);
-    })
+        const acceptableKeys = ['priceFeed'];
+        expect(keys.every(key => acceptableKeys.indexOf(key) > -1)).toBeTruthy();
+    });
+
 });
