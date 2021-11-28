@@ -1,6 +1,4 @@
-// import { ACTIONS } from '../constants';
-
-import { ACTIONS } from '../constants';
+import { ACTIONS, API_TOKEN_LOGO } from '../constants';
 import initialState from '../initial-state';
 
 const pricefeedReducer = (state = initialState.priceFeed, action) => {
@@ -10,11 +8,11 @@ const pricefeedReducer = (state = initialState.priceFeed, action) => {
     return {...state, providers: action.payload};
 
   case ACTIONS.GET_TOKEN_PRICE_BEGIN:
-    return state;
+    return {...state, isLoading: true};
 
   case ACTIONS.GET_TOKEN_PRICE_DONE:{
     if(action.error){
-      return {state, error: action.error};
+      return {...state, isLoading: false, error: action.error};
     }
     
     let newList = [];
@@ -25,14 +23,15 @@ const pricefeedReducer = (state = initialState.priceFeed, action) => {
     for(let key in action.payload){
       let newPrice = {
         name: key,
-        address: action.payload[key].address
+        address: action.payload[key].address,
+        logoAddress:`${API_TOKEN_LOGO}/${action.payload[key].address}` 
       };
       
       Object.assign(newPrice, Object.fromEntries(Object.keys(action.payload[key].price).map(p=>[p, action.payload[key].price[p]])));
 
       newList.push(newPrice);
     }
-    return {...state, list: newList, count: count};
+    return {...state, isLoading: false, list: newList, count: count};
   }
   default:
     return state;

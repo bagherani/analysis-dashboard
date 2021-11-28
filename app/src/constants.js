@@ -6,4 +6,5 @@ export const ACTIONS = {
 
 export const API_ROOT = 'http://95.216.106.78:8000/api';
 export const API_TOKEN_LOGOS = `${API_ROOT}/tokens/TokenLogos`;
+export const API_TOKEN_LOGO = `${API_ROOT}/tokens/logo`;
 export const API_TOKEN_PRICE = `${API_ROOT}/prices/GetTokenPrice`;

@@ -191,14 +191,19 @@ a:active {
 
 /* override bootstrap paging styles*/
 .app-paging {
-    .page-item {
-        .page-link {
+    width: 100%;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+        display: inline-block;
+
+        a {
             position: relative;
-            display: block;
             color: #fff;
             text-decoration: none;
-            background-color: rgba($border-color, 0.2);
-            border: 1px solid $border-color;
             border-radius: 50% !important;
             transition: none;
             width: 36px;
@@ -207,6 +212,8 @@ a:active {
             align-items: center;
             justify-content: center;
             margin-right: 10px;
+            border-color: transparent;
+            background: none;
 
             &:focus {
                 z-index: 3;
@@ -215,34 +222,58 @@ a:active {
                 outline: 0;
                 box-shadow: 0 0 0 3px rgba($border-color, 0.2);
             }
-
-            &:not([title="first"]):not([title="last"]):not([title="previous"]):not([title="next"]) {
-                background-color: transparent;
-                border-color: transparent;
-            }
         }
 
-        &:first-child .page-link {
-            border-top-left-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
+        &:first-child a,
+        &:last-child a {
+            background-color: rgba(lighten($border-color, 5), 0.4);
+            border: 1px solid $border-color;
         }
 
-        &:not(:first-child) .page-link {
-            margin-left: -1px;
-        }
-
-        &.active .page-link {
+        &.selected a {
             z-index: 3;
             color: #fff;
             background-color: darken($primary, 5) !important;
             border-color: $border-color !important;
         }
 
-        &.disabled .page-link {
+        &.disabled a {
             background-color: rgba($border-color, 0.1);
             color: #000;
             pointer-events: none;
             border-color: transparent;
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        & {
+            display: block;
+            li {
+                vertical-align: middle;
+                a {
+                    width: 32px;
+                    height: 32px;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}
+
+.dropdown-menu-dark .dropdown-item.active,
+.dropdown-menu-dark .dropdown-item:active {
+    background-color: darken($primary, 5);
+
+    &:hover {
+        background-color: darken($primary, 3);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .dropup {
+        .dropdown-toggle {
+            padding-left: 15px;
+            padding-right: 15px;
         }
     }
 }

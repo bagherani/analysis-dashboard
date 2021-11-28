@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
-import Paging from '../../shared/paging';
 import ArbitrageList from './arbitrage-list';
 
 export default function Arbitrage() {
@@ -23,7 +22,7 @@ export default function Arbitrage() {
 
       <Row>
         <Col lg="6">
-          <Paging count={70} currentPage={3} pageSize={24} />
+          paging goes here
         </Col>
         <Col lg="6" className="text-lg-end">
           <Dropdown className="d-inline-block me-2" drop="up">
