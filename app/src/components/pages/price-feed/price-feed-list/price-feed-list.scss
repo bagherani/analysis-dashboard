@@ -2,13 +2,30 @@
 
 .app-table-container {
     max-height: calc(100vh - 260px);
+    &.sticked table thead tr {
+        background: #2e2204;
+        th {
+            &:first-child {
+                border-top-left-radius: 18px;
+                border-bottom-left-radius: 18px;
+            }
+
+            &:last-child {
+                border-top-right-radius: 18px;
+                border-bottom-right-radius: 18px;
+            }
+        }
+    }
     table {
         border-collapse: separate;
         border-spacing: 0 10px;
         min-width: 100%;
-        
+
         thead {
             tr {
+                position: sticky;
+                top: 0;
+                z-index: 1;
                 td,
                 th {
                     text-align: center;
@@ -53,5 +70,19 @@
                 }
             }
         }
+    }
+}
+
+.app-table-cell {
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 18px;
+    border: solid 1px #705618;
+    background-image: linear-gradient(310deg, #2e2204 32%, transparent);
+    height: 180px;
+
+    ul {
+        margin-left: 0;
+        padding-left: 0;
     }
 }

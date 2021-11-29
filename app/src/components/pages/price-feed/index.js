@@ -68,6 +68,7 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
         columns={state.columns}
         data={list}
         totalCount={count}
+        providers={providers}
         isCompactView={state.isCompactView}
         pageSize={state.takeRows}
         pageIndex={state.skipRows * state.takeRows} />

@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './price-feed-list.scss';
 import PropTypes from 'prop-types';
 import { useFilters, useGlobalFilter, useTable } from 'react-table';
-import { Form } from 'react-bootstrap';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { Form, Row } from 'react-bootstrap';
+import TableCell from './table-cell';
 
 // Define a default UI for filtering
-function DefaultColumnFilter({ column: { filterValue, setFilter }, }) {
+function DefaultColumnFilter({ column: { filterValue, setFilter } }) {
   return (
     <Form.Control type="search" placeholder="Name" className="app-input"
       onChange={e => {
@@ -21,7 +21,9 @@ function DefaultColumnFilter({ column: { filterValue, setFilter }, }) {
  * @param {{columns:Array<any>, data:Array<any>}}
  * @returns 
  */
-function PriceFeedList({ columns, data, isLoading, isCompactView, filterChanged }) {
+function PriceFeedList({ columns, data, filterChanged, isCompactView, providers }) {
+  let [state, setState] = useState({ sticky: false });
+
   const defaultColumn = React.useMemo(
     () => ({
       // default Filter UI
@@ -52,11 +54,6 @@ function PriceFeedList({ columns, data, isLoading, isCompactView, filterChanged 
     if (typeof filterChanged === 'function') filterChanged(filters);
   }, [filters]);
 
-  if (isLoading && Array.isArray(data) && data.length == 0) {
-    return (
-      <SkeletonTheme baseColor="#3B2C07" highlightColor="#201803"><Skeleton style={{ marginBottom: 10, marginRight: isCompactView ? 10 : 0 }} count={6} width={isCompactView ? '370px' : '100%'} inline={isCompactView} height={isCompactView ? 177 : 54} borderRadius={15} /></SkeletonTheme>
-    );
-  }
 
   const getIconUrl = (rowIdx) => {
     if (Array.isArray(data) && data.length > rowIdx)
@@ -65,10 +62,28 @@ function PriceFeedList({ columns, data, isLoading, isCompactView, filterChanged 
     return '/assets/images/coins/btc.svg';
   };
 
+  const handleTableScroll = (scroll) => {
+    if (scroll > 50 && !state.sticky)
+      setState({ ...state, sticky: true });
+
+    if (scroll < 50 && state.sticky)
+      setState({ ...state, sticky: false });
+  };
+
+  if (isCompactView) {
+    return (
+      <Row>
+        {data.map((d, idx) => (
+          <TableCell key={idx} data={d} providers={providers} />
+        ))}
+      </Row>
+    );
+  }
+
   return (
     <>
-      <div className="table-responsive app-table-container">
-        <table responsive="true"  {...getTableProps()}>
+      <div className={`table-responsive app-table-container ${state.sticky ? 'sticked' : ''}`} onScroll={e => handleTableScroll(e.target.scrollTop)}>
+        <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup, headIdx) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={headIdx}>
@@ -97,7 +112,6 @@ function PriceFeedList({ columns, data, isLoading, isCompactView, filterChanged 
           </tbody>
         </table>
       </div>
-
     </>
   );
 }
@@ -107,7 +121,8 @@ PriceFeedList.propTypes = {
   data: PropTypes.any,
   isLoading: PropTypes.bool,
   isCompactView: PropTypes.bool,
-  filterChanged: PropTypes.func
+  filterChanged: PropTypes.func,
+  providers: PropTypes.array
 };
 
 DefaultColumnFilter.propTypes = {
