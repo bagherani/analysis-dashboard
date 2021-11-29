@@ -9,7 +9,7 @@ import { Dropdown } from 'react-bootstrap';
 import useInterval from '../../../use-interval-hook';
 
 function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoading }) {
-  const [state, setState] = useState({ isCompactView: false, columns: [], skipRows: 0, takeRows: 24, symbol: null, logos: [] });
+  const [state, setState] = useState({ isCompactView: true, columns: [], skipRows: 0, takeRows: 12, symbol: null, logos: [] });
 
   // providers loaded
   useEffect(() => {
@@ -92,7 +92,7 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
           />
         </Col>
 
-        <Col lg="5" className="text-lg-end">
+        <Col lg="5" className="text-lg-end text-center mt-3 mt-lg-0">
           <Dropdown className="d-inline-block me-2" drop="up"
             onSelect={
               (newVal) => {

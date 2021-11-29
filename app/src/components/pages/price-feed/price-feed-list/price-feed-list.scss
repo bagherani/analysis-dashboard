@@ -2,6 +2,15 @@
 
 .app-table-container {
     max-height: calc(100vh - 260px);
+
+    @media screen and (min-width: 720) and (max-width: 1024px) {
+        max-height: calc(100vh - 500px);
+    }
+
+    @media screen and (max-width: 720px) {
+        max-height: calc(100vh - 330px);
+    }
+
     &.sticked table thead tr {
         background: #2e2204;
         th {
