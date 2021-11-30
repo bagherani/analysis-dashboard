@@ -9,12 +9,15 @@ import { Dropdown } from 'react-bootstrap';
 import useInterval from '../../../use-interval-hook';
 
 function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoading }) {
-  const [state, setState] = useState({ isCompactView: true, columns: [], skipRows: 0, takeRows: 12, symbol: null, logos: [] });
+  const [state, setState] = useState({ isCompactView: true, columns: [], skipRows: 0, takeRows: 12, symbol: null, logos: [], showInPercent: false });
 
   // providers loaded
   useEffect(() => {
     // create columns when providers prop changed.
-    setState({ ...state, columns: [{ Header: 'Name', accessor: 'name', filter: 'fuzzyText' }].concat(providers.map(col => ({ Header: col.title, accessor: col.name, disableFilters: true, icon: col.icon }))) });
+    setState({
+      ...state, columns: [{ Header: 'Name', accessor: 'name', filter: 'fuzzyText' }].concat(
+        providers.map(col => ({ Header: col.title, accessor: col.name, disableFilters: true, icon: col.icon })))
+    });
   }, [providers]);
 
   // component did mount
@@ -55,8 +58,8 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
           </h1>
         </Col>
         <Col lg="12" xl="4" className="text-end order-xl-1 order-lg-0 order-1">
-          <button className="app-button-flat me-2" aria-label="show in percent"><img src="/assets/images/percent.svg" width="22" height="22" alt="price" /></button>
-          <button className="app-button-flat me-2" aria-label="show in dollar"><img src="/assets/images/price.svg" width="22" height="22" alt="price" /></button>
+          <button onClick={() => { setState({ ...state, showInPercent: true }); }} className="app-button-flat me-2" aria-label="show in percent"><img src="/assets/images/percent.svg" width="22" height="22" alt="price" /></button>
+          <button onClick={() => { setState({ ...state, showInPercent: false }); }} className="app-button-flat me-2" aria-label="show in dollar"><img src="/assets/images/price.svg" width="22" height="22" alt="price" /></button>
           <button onClick={() => { setState({ ...state, isCompactView: false }); }} className={`app-button-flat me-2 ${!state.isCompactView ? 'active' : ''}`} aria-label="show in list view"><img src="/assets/images/list.svg" width="22" height="22" alt="price" /></button>
           <button onClick={() => { setState({ ...state, isCompactView: true }); }} className={`app-button-flat ${state.isCompactView ? 'active' : ''}`} aria-label="show in grid view"><img src="/assets/images/grid.svg" width="22" height="22" alt="price" /></button>
         </Col>
@@ -71,6 +74,7 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
         providers={providers}
         isCompactView={state.isCompactView}
         pageSize={state.takeRows}
+        showInPercent={state.showInPercent}
         pageIndex={state.skipRows * state.takeRows} />
       }
 

@@ -7,7 +7,7 @@ import { ACTIONS, API_TOKEN_PRICE } from '../constants';
  */
 export const getProviders = () => dispatch => {
   let providersList = [
-    { title: 'Miracle', name: 'MiracleSwap', icon: '/assets/images/providers/MiracleSwap.png' },
+    { title: 'Miracle', name: 'Miracle', icon: '/assets/images/providers/MiracleSwap.png' },
     { title: 'Ape', name: 'ApeSwap', icon: '/assets/images/providers/ApeSwap.png' },
     { title: 'Bakery', name: 'BakerySwap', icon: '/assets/images/providers/BakerySwap.png' },
     { title: 'Jet', name: 'JetSwap', icon: '/assets/images/providers/JetSwap.png' },

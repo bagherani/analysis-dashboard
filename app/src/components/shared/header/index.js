@@ -17,7 +17,7 @@ function Header({ toggleMenu }) {
           </a>
         </Col>
         <Col xs="6" className="text-end">
-          <a href="#">
+          <a href="#" className="d-none d-lg-inline-block">
             <img src="/assets/images/cog.svg" width="27" height="28" />
           </a>
           <button className="app-button ms-3">Connect Wallet</button>

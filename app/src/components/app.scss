@@ -31,6 +31,8 @@ $yellow: #b9953d;
 
 $dropdown-dark-bg: $primary;
 
+$tooltip-bg: $primary !default;
+
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
 
@@ -277,4 +279,18 @@ a:active {
             padding-right: 15px;
         }
     }
+}
+
+@media screen and (min-width: 1024px) {
+    .w-lg-25 {
+        max-width: 25%;
+    }
+}
+
+.w-60 {
+    width: 60%;
+}
+
+.w-40 {
+    width: 40%;
 }

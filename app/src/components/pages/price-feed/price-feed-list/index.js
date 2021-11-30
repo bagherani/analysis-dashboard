@@ -21,7 +21,7 @@ function DefaultColumnFilter({ column: { filterValue, setFilter } }) {
  * @param {{columns:Array<any>, data:Array<any>}}
  * @returns 
  */
-function PriceFeedList({ columns, data, filterChanged, isCompactView, providers }) {
+function PriceFeedList({ columns, data, filterChanged, isCompactView, providers, showInPercent }) {
   let [state, setState] = useState({ sticky: false });
 
   const defaultColumn = React.useMemo(
@@ -38,6 +38,7 @@ function PriceFeedList({ columns, data, filterChanged, isCompactView, providers 
     headerGroups,
     prepareRow,
     rows,
+    setFilter,
     state: { filters }
   } = useTable(
     {
@@ -46,11 +47,12 @@ function PriceFeedList({ columns, data, filterChanged, isCompactView, providers 
       defaultColumn, // Be sure to pass the defaultColumn option
       manualFilters: true,
     },
-    useFilters, // useFilters!
-    useGlobalFilter, // useGlobalFilter!
+    useFilters,
+    useGlobalFilter,
   );
 
   useEffect(() => {
+    // call parent given filterChange event.
     if (typeof filterChanged === 'function') filterChanged(filters);
   }, [filters]);
 
@@ -70,13 +72,34 @@ function PriceFeedList({ columns, data, filterChanged, isCompactView, providers 
       setState({ ...state, sticky: false });
   };
 
+  /**
+   * compare cell value with `Miracle` value of the same row
+   * @param {*} value 
+   * @param {*} rowIdx 
+   */
+  const getCellClass = (value, rowIdx) => {
+    if (value < +data[rowIdx]['Miracle'])
+      return 'text-danger';
+
+    if (value > +data[rowIdx]['Miracle'])
+      return 'text-success';
+
+    return '';
+  };
+
   if (isCompactView) {
     return (
-      <Row>
-        {data.map((d, idx) => (
-          <TableCell key={idx} data={d} providers={providers} />
-        ))}
-      </Row>
+      <>
+        <Form.Control type="search" placeholder="Enter the Name" className="app-input w-lg-25 mb-3 mt-lg-5"
+          onChange={e => {
+            setFilter('name', e.target.value || undefined);
+          }} value={filters[0]?.value} />
+        <Row className="px-2">
+          {data.map((d, idx) => (
+            <TableCell key={idx} data={d} providers={providers} showInPercent={showInPercent} />
+          ))}
+        </Row>
+      </>
     );
   }
 
@@ -101,7 +124,7 @@ function PriceFeedList({ columns, data, filterChanged, isCompactView, providers 
               return (
                 <tr {...row.getRowProps()} key={rowIdx}>
                   {row.cells.map((cell, cellIdx) => {
-                    return (<td {...cell.getCellProps([{ className: cellIdx == 0 ? null : +cell.value < 50 ? 'text-danger' : 'text-success' }])} key={cellIdx}>
+                    return (<td {...cell.getCellProps([{ className: cellIdx == 0 ? null : getCellClass(+cell.value, rowIdx) }])} key={cellIdx}>
                       {cellIdx == 0 ? (<img src={getIconUrl(rowIdx)} width="32" height="32" className="me-2" />) : null}
                       {cell.render('Cell')}
                     </td>);
@@ -122,7 +145,8 @@ PriceFeedList.propTypes = {
   isLoading: PropTypes.bool,
   isCompactView: PropTypes.bool,
   filterChanged: PropTypes.func,
-  providers: PropTypes.array
+  providers: PropTypes.array,
+  showInPercent: PropTypes.bool,
 };
 
 DefaultColumnFilter.propTypes = {
