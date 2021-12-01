@@ -44,14 +44,45 @@ describe('pricefeed actions', () => {
 
   });
 
-  // test('should fetch data from server', async () => {
+  test('should fetch data from server', async () => {
+    let fn = getTokenPrices(null, 0, 1);
+    var res = await fn(() => { });
 
-  //   let callBack = ({ type, payload }) => {
-  //     expect(type).toBe(ACTIONS.FETCH_DONE);
-  //   };
+    expect(res).not.toBe(null);
+    expect(Object.keys(res.data).length).toBe(2); // {count: xx, `and the first Token itself`: ...}
+  })
 
-  //   let fn = fetchSomething();
-  //   await fn(callBack);
-  // })
+  test('should fetch data from server with paging', async () => {
+    const take = 12;
+    const skip = 96;
+    let fn = getTokenPrices(null, skip, take);
+    var res = await fn(() => { });
+
+    expect(res).not.toBe(null);
+    expect(Object.keys(res.data).length).toBe(take + 1); // {count: xx, `and the first Token itself`: ...}
+  })
+
+  test('should fetch data from server with symbol search', async () => {
+    let fn = getTokenPrices('B', 0, 400);
+    var res = await fn(() => { });
+
+    expect(res).not.toBe(null);
+    expect(Object.keys(res.data).length).toBeGreaterThan(1);
+  })
+
+  test('data should have correct structure', async () => {
+    let fn = getTokenPrices(null, 0, 1);
+    var res = await fn(() => { });
+
+    expect(res).not.toBe(null);
+    expect(Object.keys(res.data).length).toBeGreaterThan(1);
+
+    let keys = Object.keys(res.data);
+
+    let tokenName = keys.find(x => x != 'count');
+    expect('price' in res.data[tokenName]).toBeTruthy();
+    expect('address' in res.data[tokenName]).toBeTruthy();
+
+  })
 
 });

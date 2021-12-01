@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './price-feed-list.scss';
 import PropTypes from 'prop-types';
 import { useFilters, useGlobalFilter, useTable } from 'react-table';
 import { Form, Row } from 'react-bootstrap';

@@ -24,6 +24,14 @@ export const getProviders = () => dispatch => {
   dispatch({ type: ACTIONS.GET_PROVIDERS_DONE, payload: providersList });
 };
 
+/**
+ * get price feed data from server
+ * @param {string} symbol can be null or part of the token name
+ * @param {number} skip starts from 0
+ * @param {number} take 
+ * @param {boolean} showLoading `true` if you want send it as payload
+ * @returns 
+ */
 export const getTokenPrices = (symbol, skip, take, showLoading = true) => async dispatch => {
 
   dispatch({ type: ACTIONS.GET_TOKEN_PRICE_BEGIN, payload: showLoading });
@@ -35,8 +43,10 @@ export const getTokenPrices = (symbol, skip, take, showLoading = true) => async 
 
     dispatch({ type: ACTIONS.GET_TOKEN_PRICE_DONE, payload: result.data });
 
+    return result;
+
   } catch (error) {
     dispatch({ type: ACTIONS.GET_TOKEN_PRICE_DONE, payload: null, error });
+    return null;
   }
-
 };

@@ -1,10 +1,27 @@
-import * as React from 'react';
-import { Col, Dropdown, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import ArbitrageList from './arbitrage-list';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import useInterval from '../../../use-interval-hook';
+import { getArbitragePrices } from '../../../actions/arbitrage-actions';
 
-export default function Arbitrage() {
+function Arbitrage({ getArbitragePrices, isLoading/*, list*/ }) {
+  const [state/*, setState*/] = useState({ revenuePercent: 0 });
+
+  // component did mount
+  useEffect(() => {
+    getArbitragePrices(0);
+  }, []);
+
+  // fetch data every 10 seconds
+  useInterval(() => {
+    getArbitragePrices(state.revenuePercent, false);
+  }, 1e4);
+
   return (
     <div>
+      {isLoading ? <div className="app-loading" /> : null}
       <Row className="app-page-title-container">
         <Col lg="12" xl="8" className="order-xl-0 order-lg-1 order-0 mt-3 mt-lg-0">
           <h1 className="app-page-title">
@@ -13,33 +30,26 @@ export default function Arbitrage() {
           </h1>
         </Col>
         <Col lg="12" xl="4" className="text-end order-xl-1 order-lg-0 order-1">
-          <button className="app-button-flat me-2" aria-label="show in percent"><img src="/assets/images/percent.svg" width="22" height="22" alt="price" /></button>
-          <button className="app-button-flat" aria-label="show in dollar"><img src="/assets/images/price.svg" width="22" height="22" alt="price" /></button>
+          {/* percent and dollar buttons goes here */}
         </Col>
       </Row>
 
       <ArbitrageList />
-
-      <Row>
-        <Col lg="6">
-          paging goes here
-        </Col>
-        <Col lg="6" className="text-lg-end">
-          <Dropdown className="d-inline-block me-2" drop="up">
-            <Dropdown.Toggle variant="" id="dropdown-basic" className="app-button sm">
-              24
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu variant="dark">
-              <Dropdown.Item>24</Dropdown.Item>
-              <Dropdown.Item>48</Dropdown.Item>
-              <Dropdown.Item>96</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-
-          Displaying 1 - 24 of 100 records
-        </Col>
-      </Row>
     </div>
   );
 }
+
+
+Arbitrage.propTypes = {
+  getArbitragePrices: PropTypes.func,
+  list: PropTypes.array,
+  isLoading: PropTypes.bool
+};
+
+
+export default connect(
+  state => state.priceFeed,
+  dispatch => ({
+    getArbitragePrices: (percent, showLoading) => dispatch(getArbitragePrices(percent, showLoading)),
+  })
+)(Arbitrage);
