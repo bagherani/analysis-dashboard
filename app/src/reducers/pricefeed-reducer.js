@@ -8,7 +8,7 @@ const pricefeedReducer = (state = initialState.priceFeed, action) => {
     return {...state, providers: action.payload};
 
   case ACTIONS.GET_TOKEN_PRICE_BEGIN:
-    return {...state, isLoading: true};
+    return {...state, isLoading: action.payload};
 
   case ACTIONS.GET_TOKEN_PRICE_DONE:{
     if(action.error){

@@ -28,7 +28,7 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
 
   // fetch data every 10 seconds
   useInterval(() => {
-    getTokenPrices(state.symbol, state.skipRows, state.takeRows);
+    getTokenPrices(state.symbol, state.skipRows, state.takeRows, false);
   }, 1e4);
 
   // filter and paging changed.
@@ -50,6 +50,7 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
 
   return (
     <div>
+      {isLoading ? <div className="app-loading" /> : null}
       <Row className="app-page-title-container">
         <Col lg="12" xl="8" className="order-xl-0 order-lg-1 order-0 mt-3 mt-lg-0">
           <h1 className="app-page-title">
@@ -58,8 +59,8 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
           </h1>
         </Col>
         <Col lg="12" xl="4" className="text-end order-xl-1 order-lg-0 order-1">
-          <button onClick={() => { setState({ ...state, showInPercent: true }); }} className="app-button-flat me-2" aria-label="show in percent"><img src="/assets/images/percent.svg" width="22" height="22" alt="price" /></button>
-          <button onClick={() => { setState({ ...state, showInPercent: false }); }} className="app-button-flat me-2" aria-label="show in dollar"><img src="/assets/images/price.svg" width="22" height="22" alt="price" /></button>
+          <button onClick={() => { setState({ ...state, showInPercent: true }); }} className={`app-button-flat me-2 ${state.showInPercent ? 'active' : ''}`} aria-label="show in percent"><img src="/assets/images/percent.svg" width="22" height="22" alt="price" /></button>
+          <button onClick={() => { setState({ ...state, showInPercent: false }); }} className={`app-button-flat me-2 ${!state.showInPercent ? 'active' : ''}`} aria-label="show in dollar"><img src="/assets/images/price.svg" width="22" height="22" alt="price" /></button>
           <button onClick={() => { setState({ ...state, isCompactView: false }); }} className={`app-button-flat me-2 ${!state.isCompactView ? 'active' : ''}`} aria-label="show in list view"><img src="/assets/images/list.svg" width="22" height="22" alt="price" /></button>
           <button onClick={() => { setState({ ...state, isCompactView: true }); }} className={`app-button-flat ${state.isCompactView ? 'active' : ''}`} aria-label="show in grid view"><img src="/assets/images/grid.svg" width="22" height="22" alt="price" /></button>
         </Col>
@@ -135,6 +136,6 @@ export default connect(
   state => state.priceFeed,
   dispatch => ({
     getProviders: () => dispatch(getProviders()),
-    getTokenPrices: (symbol, skip, limit) => dispatch(getTokenPrices(symbol, skip, limit)),
+    getTokenPrices: (symbol, skip, limit, showLoading) => dispatch(getTokenPrices(symbol, skip, limit, showLoading)),
   })
 )(PriceFeed);

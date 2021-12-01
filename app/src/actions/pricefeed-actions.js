@@ -24,9 +24,9 @@ export const getProviders = () => dispatch => {
   dispatch({ type: ACTIONS.GET_PROVIDERS_DONE, payload: providersList });
 };
 
-export const getTokenPrices = (symbol, skip, take) => async dispatch => {
+export const getTokenPrices = (symbol, skip, take, showLoading = true) => async dispatch => {
 
-  dispatch({ type: ACTIONS.GET_TOKEN_PRICE_BEGIN });
+  dispatch({ type: ACTIONS.GET_TOKEN_PRICE_BEGIN, payload: showLoading });
 
   try {
 

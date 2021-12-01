@@ -35,7 +35,7 @@ function PriceFeedTableCell({ data, providers, showInPercent }) {
 
   const renderTooltip = ({ key: colName, price, ...props }) => (
     <Tooltip {...props}>
-      {colName} <br /> <span className={getCellClass(price)}>{showInPercent ? (Math.abs(+price - +data['Miracle']) / +data['Mircale'] * 100) : price}</span>
+      {colName} <br /> <span className={getCellClass(price)}>{showInPercent ? (Math.abs(+price - +data['Miracle']) / +data['Miracle'] * 100) + '%' : price}</span>
     </Tooltip>
   );
 
@@ -70,9 +70,9 @@ function PriceFeedTableCell({ data, providers, showInPercent }) {
         <div className="w-60 h-100 d-flex flex-column">
           <div>
             <img src={data.logoAddress} width="41" height="41" className="me-2" />
-            <span>{data.name}</span>
+            <span className="f-weight-700">{data.name}</span>
           </div>
-          <div className="ms-5 mt-2">
+          <div className="ms-5 mt-2 f-weight-500">
             {getPrice()}
           </div>
           <div className="mt-auto">
