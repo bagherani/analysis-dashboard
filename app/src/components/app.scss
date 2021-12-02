@@ -143,7 +143,7 @@ a:active {
 }
 
 .app-page-title-container {
-    @media screen and (min-width: 720) and (max-width: 1024px) {
+    @media screen and (min-width: 720px) and (max-width: 1024px) {
         position: absolute;
         width: 60%;
         left: 40%;
@@ -154,7 +154,7 @@ a:active {
 .app-page-title {
     color: #fff;
     font-size: 18pt;
-    @media screen and (min-width: 720) and (max-width: 1024px) {
+    @media screen and (min-width: 720px) and (max-width: 1024px) {
         margin-top: 50px;
     }
 }
@@ -164,12 +164,17 @@ a:active {
 }
 
 .app-input {
+    min-width: 100px;
     &,
     &:disabled {
         background-color: transparent;
         border: solid 1px $border-color;
         border-radius: 25px;
         color: #b9953d;
+    }
+
+    &:hover {
+        color: #fff;
     }
 
     &:focus {
@@ -338,12 +343,23 @@ a:active {
     }
 }
 
-
 .app-table-container {
     max-height: calc(100vh - 260px);
+    min-height: 50vh;
 
-    @media screen and (min-width: 720) and (max-width: 1024px) {
-        max-height: calc(100vh - 500px);
+    &.height-larger {
+        max-height: calc(100vh - 200px);
+        @media screen and (min-width: 720px) and (max-width: 1024px) {
+            max-height: calc(100vh - 330px);
+        }
+
+        @media screen and (max-width: 720px) {
+            max-height: 74vh;
+        }
+    }
+
+    @media screen and (min-width: 720px) and (max-width: 1024px) {
+        max-height: calc(100vh - 380px);
     }
 
     @media screen and (max-width: 720px) {
@@ -385,6 +401,7 @@ a:active {
                 background-image: linear-gradient(310deg, #2e2204 32%, transparent);
 
                 td {
+                    white-space: nowrap;
                     border-top: solid 1px #705618;
                     border-bottom: solid 1px #705618;
                     padding-top: 10px;
@@ -420,8 +437,6 @@ a:active {
         }
     }
 }
-
-
 
 .app-table-cell {
     margin-bottom: 10px;

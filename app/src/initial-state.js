@@ -1,6 +1,7 @@
 const initialState = {
   arbitrageFeed: {
     list: [],
+    providers: [],
     isLoading: false,
     error: null,
   },

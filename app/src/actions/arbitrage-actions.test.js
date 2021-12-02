@@ -3,7 +3,7 @@ import { getArbitragePrices } from './arbitrage-actions';
 describe('arbitrage actions', () => {
 
   test('should fetch data from server', async () => {
-    let fn = getArbitragePrices(0);
+    let fn = getArbitragePrices({ Percent: 0 });
     var res = await fn(() => { });
 
     expect(res).not.toBe(null);
@@ -11,7 +11,7 @@ describe('arbitrage actions', () => {
   })
 
   test('should have the correct structure', async () => {
-    let fn = getArbitragePrices(0);
+    let fn = getArbitragePrices({ Percent: 0 });
     var res = await fn(() => { });
 
     expect(res).not.toBe(null);
