@@ -8,12 +8,14 @@ import { getArbitragePrices } from '../../../actions/arbitrage-actions';
 import { getProviders } from '../../../actions/pricefeed-actions';
 import { Dropdown } from 'react-bootstrap';
 import Select from 'react-select';
+import { APP_NAME } from '../../../constants';
 
 function Arbitrage({ getProviders, getArbitragePrices, isLoading, list, providers }) {
   const [state, setState] = useState({ sticky: false, filter: { Percent: 0, BuyIn: [], SellIn: [], Token0Symbol: '' } });
 
   // component did mount
   useEffect(() => {
+    document.title = `${APP_NAME} | Arbitrage`;
     getProviders();
     getArbitragePrices(state.filter);
   }, []);
@@ -126,7 +128,7 @@ function Arbitrage({ getProviders, getArbitragePrices, isLoading, list, provider
       <Row className="app-page-title-container">
         <Col lg="12" xl="8" className="order-xl-0 order-lg-1 order-0 mt-3 mt-lg-0">
           <h1 className="app-page-title">
-            <img src="/assets/images/page-crypto-price-feed.svg" width="48" height="48" alt="crypto logo" className="me-2" />
+            <img src="/assets/images/nav-arbitrage.svg" width="48" height="48" alt="crypto logo" className="me-2" />
             &nbsp;Arbitrage
           </h1>
         </Col>
@@ -142,13 +144,11 @@ function Arbitrage({ getProviders, getArbitragePrices, isLoading, list, provider
             <tr>
               <th className="text-start">
                 <Form.Group controlId="Token0Symbol" as={Col}>
-                  <Form.Label>Name</Form.Label>
                   <Form.Control type="search" name="Token0Symbol" placeholder="Enter the name" className="app-input"
                     onChange={handleFilterChange} />
                 </Form.Group>
               </th>
               <th className="text-start px-3">
-                <label className="d-block form-label">Buy Position</label>
                 <Select
                   styles={customStyles}
                   closeMenuOnSelect={false}
@@ -163,7 +163,6 @@ function Arbitrage({ getProviders, getArbitragePrices, isLoading, list, provider
                 />
               </th>
               <th className="text-start px-3">
-                <label className="d-block form-label">Buy Position</label>
                 <Select
                   styles={customStyles}
                   closeMenuOnSelect={false}
@@ -171,14 +170,13 @@ function Arbitrage({ getProviders, getArbitragePrices, isLoading, list, provider
                   defaultValue={'UniSwap'}
                   isMulti
                   onChange={options => { setState({ ...state, filter: { ...state.filter, SellIn: options.map(x => x.value) } }); }}
-                  placeholder="Buy position"
+                  placeholder="Sell position"
                   theme={selectTheme}
                   menuPortalTarget={document.querySelector('body')}
                   options={providers.filter(x => x.name != 'Miracle').map(x => ({ label: x.name, value: x.name }))}
                 />
               </th>
               <th className="text-start px-5">
-                <label className="d-block form-label">Revenue</label>
                 <Dropdown className="d-inline-block" drop="down"
                   onSelect={
                     (newVal) => {
@@ -198,7 +196,6 @@ function Arbitrage({ getProviders, getArbitragePrices, isLoading, list, provider
               </th>
               <th className="text-start px-5">
                 <Form.Group controlId="actions" as={Col}>
-                  <Form.Label>&nbsp;</Form.Label>
                   <Form.Control type="search" name="actions" placeholder="Actions" className="app-input app-pointer-event-none" disabled={true} />
                 </Form.Group>
               </th>

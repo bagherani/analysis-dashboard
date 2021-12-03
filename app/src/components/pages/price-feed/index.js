@@ -7,6 +7,7 @@ import { getProviders, getTokenPrices } from '../../../actions/pricefeed-actions
 import ReactPaginate from 'react-paginate';
 import { Dropdown } from 'react-bootstrap';
 import useInterval from '../../../use-interval-hook';
+import { APP_NAME } from '../../../constants';
 
 function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoading }) {
   const [state, setState] = useState({ isCompactView: true, columns: [], skipRows: 0, takeRows: 12, symbol: null, showInPercent: false });
@@ -22,6 +23,7 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
 
   // component did mount
   useEffect(() => {
+    document.title = `${APP_NAME} | Price Feed`;
     getProviders();
     getTokenPrices(state.symbol, state.skipRows, state.takeRows);
   }, []);
@@ -54,7 +56,7 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
       <Row className="app-page-title-container">
         <Col lg="12" xl="8" className="order-xl-0 order-lg-1 order-0 mt-3 mt-lg-0">
           <h1 className="app-page-title">
-            <img src="/assets/images/page-crypto-price-feed.svg" width="48" height="48" alt="crypto logo" className="me-2" />
+            <img src="/assets/images/nav-price.svg" width="48" height="48" alt="crypto logo" className="me-2" />
             &nbsp;Cryptocurrency Price Feed
           </h1>
         </Col>

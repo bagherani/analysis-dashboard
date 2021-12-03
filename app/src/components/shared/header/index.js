@@ -8,7 +8,7 @@ function Header({ toggleMenu }) {
     <div className="app-header">
       <Row className="align-items-center">
         <Col xs="6">
-          <button className="app-button-flat d-xl-none d-inline-block px-1" onClick={() => { toggleMenu && toggleMenu(); }}>
+          <button className="app-button-flat d-md-none d-inline-block px-1" onClick={() => { toggleMenu && toggleMenu(); }}>
             <img src="/assets/images/menu-handler.svg" width="18" height="18" />
           </button>
           <a href="/" className="d-inline-block ms-2">
