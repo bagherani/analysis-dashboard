@@ -368,6 +368,9 @@ a:active {
 
     &.sticked table thead tr {
         background: #2e2204;
+        .app-input {
+            background: #2e2204;
+        }
         th {
             &:first-child {
                 border-top-left-radius: 18px;
@@ -384,21 +387,30 @@ a:active {
         border-collapse: separate;
         border-spacing: 0 10px;
         min-width: 100%;
+        table-layout: fixed;
 
         thead {
             tr {
                 position: sticky;
                 top: 0;
-                z-index: 1;
+                z-index: 3;
                 td,
                 th {
+                    .app-input {
+                        background-color: #2E2204;
+                    }
                     text-align: center;
+                    &:first-child {
+                        position: sticky;
+                        left: 0;
+                        z-index: 3;
+                    }
                 }
             }
         }
         tbody {
             tr {
-                background-image: linear-gradient(310deg, #2e2204 32%, transparent);
+                background-image: linear-gradient(90deg, #2e2204, transparent);
 
                 td {
                     white-space: nowrap;
@@ -410,6 +422,10 @@ a:active {
                     text-align: center;
 
                     &:first-child {
+                        background-image: linear-gradient(90deg, #2e2204 70%, transparent);
+                        position: sticky;
+                        left: 0;
+                        z-index: 2;
                         border-left: solid 1px #705618;
                         min-width: 180px;
                         padding-left: 15px;

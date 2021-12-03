@@ -39,7 +39,7 @@
         &.active {
           opacity: 1;
         }
-        &:disabled {
+        &[disabled] {
           pointer-events: none;
         }
 

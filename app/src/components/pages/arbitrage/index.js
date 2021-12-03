@@ -62,7 +62,7 @@ function Arbitrage({ getProviders, getArbitragePrices, isLoading, list, provider
     control: (provided) => ({
       ...provided,
       maxWidth: 300,
-      backgroundColor: 'transparent',
+      backgroundColor: '#2E2204',
       border: 'solid 1px #705618',
       borderRadius: '25px',
       color: '#b9953d',
