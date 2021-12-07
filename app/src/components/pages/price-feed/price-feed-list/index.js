@@ -125,7 +125,7 @@ function PriceFeedList({ columns, data, filterChanged, isCompactView, providers,
                   {row.cells.map((cell, cellIdx) => {
                     return (<td {...cell.getCellProps([{ className: cellIdx == 0 ? null : getCellClass(+cell.value, rowIdx) }])} key={cellIdx}>
                       {cellIdx == 0 ? (<img src={getIconUrl(rowIdx)} width="32" height="32" className="me-2" />) : null}
-                      {cell.render('Cell')}
+                      {cellIdx < 2 ? cell.render('Cell') : showInPercent ? isNaN(+cell.value) || isNaN(row.cells[1].value)?'': (Math.abs(+cell.value - +row.cells[1].value) / +row.cells[1].value * 100).toFixed(2) + '%' : cell.value}
                     </td>);
                   })}
                 </tr>

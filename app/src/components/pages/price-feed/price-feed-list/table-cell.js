@@ -35,7 +35,7 @@ function PriceFeedTableCell({ data, providers, showInPercent }) {
 
   const renderTooltip = ({ key: colName, price, ...props }) => (
     <Tooltip {...props}>
-      {colName} <br /> <span className={getCellClass(price)}>{showInPercent ? (Math.abs(+price - +data['Miracle']) / +data['Miracle'] * 100) + '%' : price}</span>
+      {colName} <br /> <span className={getCellClass(price)}>{showInPercent ? (Math.abs(+price - +data['Miracle']) / +data['Miracle'] * 100).toFixed(2) + '%' : price}</span>
     </Tooltip>
   );
 
@@ -43,8 +43,6 @@ function PriceFeedTableCell({ data, providers, showInPercent }) {
     let cols = Object.keys(data).filter(x => ['name', 'address', 'logoAddress', 'Miracle'].indexOf(x) == -1);
     if (cols.length == 0)
       return <span className="text-muted">No Provider</span>;
-
-    cols = ['Miracle', ...cols];
 
     let result = (<>
       {cols.map((key, idx) => (
@@ -83,9 +81,9 @@ function PriceFeedTableCell({ data, providers, showInPercent }) {
             </div>
           </div>
         </div>
-        <div className="w-40 h-100 mt-2">
+        <div className="w-40 h-100 mt-2 d-flex flex-column justify-content-end">
           <span className="text-warning">Data Providers</span>
-          <ul className="mt-2">
+          <ul className="mt-2 mb-1">
             {getProvidersPrices()}
           </ul>
         </div>
