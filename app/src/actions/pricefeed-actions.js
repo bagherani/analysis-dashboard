@@ -18,7 +18,7 @@ export const getProviders = () => dispatch => {
     { title: 'Spooky', name: 'SpookySwap', icon: '/assets/images/providers/SpookySwap.png' },
     { title: 'Sushi', name: 'SushiSwap', icon: '/assets/images/providers/SushiSwap.png' },
     { title: 'Uni', name: 'UniSwap', icon: '/assets/images/providers/UniSwap.png' },
-    { title: 'Zoo', name: 'ZooSwap', icon: '/assets/images/providers/ZooSwap.png' },
+    { title: 'Zoo', name: 'ZooCoin', icon: '/assets/images/providers/ZooCoin.png' },
   ];
 
   dispatch({ type: ACTIONS.GET_PROVIDERS_DONE, payload: providersList });
