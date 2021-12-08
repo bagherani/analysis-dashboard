@@ -1,4 +1,4 @@
-import { ACTIONS } from '../constants';
+import { ACTIONS, API_TOKEN_LOGO } from '../constants';
 import initialState from '../initial-state';
 
 const arbitrageReducer = (state = initialState.arbitrageFeed, action) => {
@@ -17,10 +17,20 @@ const arbitrageReducer = (state = initialState.arbitrageFeed, action) => {
     
     let theList = action.payload;
 
-    // client side filtering
+    // client side filter token name.
     theList = theList.filter(item=>!action.filters.Token0Symbol || item.Token0Symbol.toLowerCase().indexOf(action.filters.Token0Symbol.toLowerCase())>-1);
+
+    // client-side filter swaps that user are selected on the columns filter.
     theList = theList.filter(item=>!Array.isArray(action.filters.BuyIn) || action.filters.BuyIn.length == 0 || action.filters.BuyIn.indexOf(item.BuyIn)>-1);
     theList = theList.filter(item=>!Array.isArray(action.filters.SellIn) || action.filters.SellIn.length == 0 || action.filters.SellIn.indexOf(item.SellIn)>-1);
+    
+    for(let item of theList){
+      item.logoAddress = `${API_TOKEN_LOGO}/${item.Token0Address}`;
+    }
+
+    theList.sort((a,b)=>{
+      return (a.Date != undefined)? a.Date.$date > b.Date.$date : 0;
+    });
 
     return {...state, isLoading: false, list: theList};
   }

@@ -1,24 +1,71 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-function ArbitrageListItem({ Token0Symbol, Token1Symbol, Percent, BuyIn, SellIn }) {
+
+function ArbitrageListItem({ Token0Symbol, Date: date, Token1Symbol, Percent, BuyIn, SellIn, MinRatio, MaxRatio, logoAddress }) {
+  const wrapTimeSince = (val, str) => {
+    return <span className="text-warning">{val}<span className="text-small">{str}</span></span>;
+  };
+
+  const timeSince = (date) => {
+
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = seconds / 31536000;
+
+    if (interval > 1) {
+      return wrapTimeSince(Math.floor(interval), 'years');
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return wrapTimeSince(Math.floor(interval), 'months');
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return wrapTimeSince(Math.floor(interval), ' days');
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return wrapTimeSince(Math.floor(interval), ' hours');
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return wrapTimeSince(Math.floor(interval), ' minutes');
+    }
+
+    return wrapTimeSince(Math.floor(seconds), ' seconds');
+  };
+
+  const renderTooltip = ({ date, ...props }) => (
+    <Tooltip {...props}>
+      {timeSince(date.$date)}
+    </Tooltip>
+  );
+
   return (
     <tr className="app-arbitrage-list-item">
       <td>
-        <img src="/assets/images/coins/btc.svg" width="36" height="36" className="me-2" />
+        <img src={logoAddress} width="36" height="36" className="me-2" />
         <span>{Token0Symbol.toUpperCase()}</span>
+
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 400 }}
+          overlay={props => renderTooltip({ date, ...props })}
+        >
+          <img src="/assets/images/clock.svg" width="24" height="24" className="ms-2" />
+        </OverlayTrigger>
       </td>
       <td className="px-5 text-start">
         <div className="f-weight-500">{BuyIn}</div>
-        <span className="text-warning float-start">$0</span>
+        <span className="text-warning float-start">{MinRatio.toFixed(2)}</span>
         <span className="text-warning float-end">{Token1Symbol.toUpperCase()}</span>
         <div className="clearfix"></div>
       </td>
       <td className="px-5 text-start">
         <div className="f-weight-500">{SellIn}</div>
-        <span className="text-warning float-start">$0</span>
-        <span className="text-warning float-end">none</span>
-        <div className="clearfix"></div>
+        <span className="text-warning">{MaxRatio.toFixed(2)}</span>
       </td>
       <td className="text-success text-center">
         {Math.floor(Percent) == Percent ? Percent : Percent.toFixed(2)}%
@@ -37,6 +84,10 @@ ArbitrageListItem.propTypes = {
   Percent: PropTypes.number,
   BuyIn: PropTypes.string,
   SellIn: PropTypes.string,
+  MinRatio: PropTypes.number,
+  MaxRatio: PropTypes.number,
+  logoAddress: PropTypes.number,
+  Date: PropTypes.any
 };
 
 export default ArbitrageListItem;
