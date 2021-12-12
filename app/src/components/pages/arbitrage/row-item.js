@@ -20,7 +20,7 @@ function ArbitrageListItem({ Token0Symbol, Date: date, Token1Symbol, Percent, Bu
     <tr className="app-arbitrage-list-item">
       <td>
         <img src={logoAddress} width="36" height="36" className="me-2" />
-        <span>{Token0Symbol.toUpperCase()}</span>
+        <span>{Token0Symbol?.toUpperCase()}</span>
 
         <OverlayTrigger
           placement="bottom"
@@ -32,16 +32,16 @@ function ArbitrageListItem({ Token0Symbol, Date: date, Token1Symbol, Percent, Bu
       </td>
       <td className="px-5 text-start">
         <div className="f-weight-500">{BuyIn}</div>
-        <span className="text-warning float-start">{MinRatio.toFixed(2)}</span>
-        <span className="text-warning float-end">{Token1Symbol.toUpperCase()}</span>
+        <span className="text-warning float-start">{MinRatio?.toFixed(2)}</span>
+        <span className="text-warning float-end">{Token1Symbol?.toUpperCase()}</span>
         <div className="clearfix"></div>
       </td>
       <td className="px-5 text-start">
         <div className="f-weight-500">{SellIn}</div>
-        <span className="text-warning">{MaxRatio.toFixed(2)}</span>
+        <span className="text-warning">{MaxRatio?.toFixed(2)}</span>
       </td>
       <td className="text-success text-center">
-        {Math.floor(Percent) == Percent ? Percent : Percent.toFixed(2)}%
+        {Math.floor(Percent) == Percent ? Percent : Percent?.toFixed(2)}%
       </td>
       <td className="text-center">
         <button className="app-button sm me-2">Action 1</button>
