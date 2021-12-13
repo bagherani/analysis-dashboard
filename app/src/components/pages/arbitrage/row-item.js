@@ -59,7 +59,7 @@ ArbitrageListItem.propTypes = {
   SellIn: PropTypes.string,
   MinRatio: PropTypes.number,
   MaxRatio: PropTypes.number,
-  logoAddress: PropTypes.number,
+  logoAddress: PropTypes.string,
   Date: PropTypes.any
 };
 

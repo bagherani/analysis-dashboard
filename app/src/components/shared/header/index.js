@@ -3,12 +3,12 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-function Header({ toggleMenu }) {
+function Header({ onOpen }) {
   return (
     <div className="app-header">
       <Row className="align-items-center">
         <Col xs="6">
-          <button className="app-button-flat d-md-none d-inline-block px-1" onClick={() => { toggleMenu && toggleMenu(); }}>
+          <button className="app-button-flat d-md-none d-inline-block px-1" onClick={() => { onOpen && onOpen(); }}>
             <img src="/assets/images/menu-handler.svg" width="18" height="18" />
           </button>
           <a href="/" className="d-inline-block ms-2">
@@ -28,7 +28,7 @@ function Header({ toggleMenu }) {
 }
 
 Header.propTypes = {
-  toggleMenu: PropTypes.func
+  onOpen: PropTypes.func
 };
 
 export default Header;
