@@ -43,10 +43,17 @@ describe("arbitrage reducer", () => {
 
     test("list should be sorted desc on Date", () => {
         let theNewState = arbitrageReducer(undefined, { type: ACTIONS.GET_ARBITRAGE_DONE, payload: mockData, filters: {} });
+        let sortedCorrectly = true;
 
-        expect(theNewState.list[0].Date.$date >= theNewState.list[1].Date.$date).toBeTruthy();
-        expect(theNewState.list[0].Date.$date >= theNewState.list[10].Date.$date).toBeTruthy();
-        expect(theNewState.list[10].Date.$date >= theNewState.list[20].Date.$date).toBeTruthy();
+        theNewState.list.reduce((prev, curr) => {
+            if (prev.Date.$date < curr.Date.$date)
+                sortedCorrectly = false;
+            return curr;
+        }, { Date: { $date: 5e12/* a long future */ } });
+
+        
+        expect(sortedCorrectly).toBeTruthy();
+
     })
 
 })

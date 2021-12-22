@@ -45,7 +45,8 @@ function PriceFeed({ getProviders, getTokenPrices, providers, list, count, isLoa
 
   const handleFilterChange = (filters) => {
     if (filters && Array.isArray(filters) && filters.length > 0)
-      setState({ ...state, symbol: filters[0].value });
+      // set `symbol` filter and goto first page.
+      setState({ ...state, symbol: filters[0].value, skipRows: 0 });
     else
       setState({ ...state, symbol: null });
   };
