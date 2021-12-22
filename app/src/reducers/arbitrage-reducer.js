@@ -29,7 +29,7 @@ const arbitrageReducer = (state = initialState.arbitrageFeed, action) => {
     }
 
     theList.sort((a,b)=>{
-      return b.Date.$date - a.Date.$date;
+      return b.Date.$date - a.Date.$date < 0 ? -1 : 1;
     });
 
     return {...state, isLoading: false, list: theList};
