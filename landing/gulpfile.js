@@ -1,80 +1,50 @@
-var syntax        = 'sass'; // Syntax: sass or scss;
+const gulp = require("gulp");
+const concat = require("gulp-concat");
+const jsMin = require('gulp-jsmin');
+const rename = require("gulp-rename");
+const sass = require('gulp-sass')(require('node-sass'));
+const cssMin = require('gulp-css');
+const browserSync = require('browser-sync').create();
 
-var gulp          = require('gulp'),
-		gutil         = require('gulp-util' ),
-		sass          = require('gulp-sass'),
-		browsersync   = require('browser-sync'),
-		concat        = require('gulp-concat'),
-		uglify        = require('gulp-uglify'),
-		cleancss      = require('gulp-clean-css'),
-		rename        = require('gulp-rename'),
-		autoprefixer  = require('gulp-autoprefixer'),
-		notify        = require("gulp-notify"),
-		rsync         = require('gulp-rsync');
+function minifyMainJs() {
+	return gulp.src('src/js/common.js').pipe(jsMin()).pipe(rename("common.min.js")).pipe(gulp.dest('src/js/'));
+}
+gulp.task(minifyMainJs);
 
-gulp.task('browser-sync', function() {
-	browsersync({
-		server: {
-			baseDir: 'app'
-		},
-		notify: false,
-		// open: false,
-		// tunnel: true,
-		// tunnel: "projectname", //Demonstration page: http://projectname.localtunnel.me
-	})
-});
-
-gulp.task('styles', function() {
-	return gulp.src('app/'+syntax+'/**/*.'+syntax+'')
-	.pipe(sass({ outputStyle: 'expand' }).on("error", notify.onError()))
-	.pipe(rename({ suffix: '.min', prefix : '' }))
-	.pipe(autoprefixer(['last 15 versions']))
-	.pipe(cleancss( {level: { 1: { specialComments: 0 } } })) // Opt., comment out when debugging
-	.pipe(gulp.dest('app/css'))
-	.pipe(browsersync.reload( {stream: true} ))
-});
-
-gulp.task('js', function() {
-	return gulp.src([
-		// 'app/libs/jquery/dist/jquery.min.js',
-		'app/libs/OwlCarousel/owl.carousel.min.js',
-		'app/libs/CounterUp/jquery.countup.min.js',
-		'app/libs/CounterUp/waypoint.js',
-		'app/libs/magnific/jquery.magnific-popup.min.js',
-		'app/libs/validate/jquery.validate.min.js',
-		'app/libs/chart/chart.js',
-		'app/libs/chart/chart.bundle.js',
-		'app/libs/jarallax-master/dist/jarallax.min.js',
-		'app/libs/jarallax-master/dist/jarallax-element.min.js',
-		'app/libs/flipclock/flipclock.min.js',
-		'app/libs/aos-master/aos.js',
-		'app/js/common.js', // Always at the end
+// Specific Task
+function js() {
+	return gulp
+		.src([
+			'src/libs/OwlCarousel/owl.carousel.min.js',
+			'src/libs/CounterUp/jquery.countup.min.js',
+			'src/libs/CounterUp/waypoint.js',
+			'src/libs/magnific/jquery.magnific-popup.min.js',
+			'src/libs/validate/jquery.validate.min.js',
+			'src/libs/chart/chart.js',
+			'src/libs/chart/chart.bundle.js',
+			'src/libs/jarallax-master/dist/jarallax.min.js',
+			'src/libs/jarallax-master/dist/jarallax-element.min.js',
+			'src/libs/flipclock/flipclock.min.js',
+			'src/libs/aos-master/aos.js',
+			'src/js/common.min.js',
 		])
-	.pipe(concat('scripts.min.js'))
-	// .pipe(uglify()) // Mifify js (opt.)
-	.pipe(gulp.dest('app/js'))
-	.pipe(browsersync.reload({ stream: true }))
-});
+		.pipe(concat('scripts.min.js'))
+		.pipe(gulp.dest('src/js'))
+		.pipe(browserSync.stream());
+}
+gulp.task(js);
 
-gulp.task('rsync', function() {
-	return gulp.src('app/**')
-	.pipe(rsync({
-		root: 'app/',
-		hostname: 'username@yousite.com',
-		destination: 'yousite/public_html/',
-		// include: ['*.htaccess'], // Includes files to deploy
-		exclude: ['**/Thumbs.db', '**/*.DS_Store'], // Excludes files from deploy
-		recursive: true,
-		archive: true,
-		silent: false,
-		compress: true
-	}))
-});
+// Specific Task
+function gulpSass() {
+	return gulp
+		.src(['src/sass/*.sass'])
+		.pipe(sass())
+		.pipe(cssMin())
+		.pipe(rename("main.min.css"))
+		.pipe(gulp.dest('src/css/'))
+		.pipe(browserSync.stream());
+}
+gulp.task(gulpSass);
 
-gulp.task('watch', ['styles', 'js', 'browser-sync'], function() {
-	gulp.watch('app/'+syntax+'/**/*.'+syntax+'', ['styles']);
-	gulp.watch(['libs/**/*.js', 'app/js/common.js'], ['js']);
-	gulp.watch('app/*.html', browsersync.reload)
-});
-
-gulp.task('default', ['watch']);
+// Run multiple tasks
+gulp.task('start', gulp.series(minifyMainJs, js, gulpSass));
