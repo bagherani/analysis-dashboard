@@ -11,7 +11,6 @@ function minifyMainJs() {
 }
 gulp.task(minifyMainJs);
 
-// Specific Task
 function js() {
 	return gulp
 		.src([
@@ -30,11 +29,10 @@ function js() {
 		])
 		.pipe(concat('scripts.min.js'))
 		.pipe(gulp.dest('src/js'))
-		.pipe(browserSync.stream());
+		.pipe(browserSync.reload({ stream: true }));
 }
 gulp.task(js);
 
-// Specific Task
 function gulpSass() {
 	return gulp
 		.src(['src/sass/*.sass'])
@@ -42,9 +40,16 @@ function gulpSass() {
 		.pipe(cssMin())
 		.pipe(rename("main.min.css"))
 		.pipe(gulp.dest('src/css/'))
-		.pipe(browserSync.stream());
+		.pipe(browserSync.reload({ stream: true }));
 }
 gulp.task(gulpSass);
 
-// Run multiple tasks
-gulp.task('start', gulp.series(minifyMainJs, js, gulpSass));
+function watch(){
+	gulp.watch('src/sass/**/*.sass', gulpSass);
+	gulp.watch(['libs/**/*.js', 'src/js/common.js'], gulp.series(minifyMainJs, js));
+	gulp.watch('src/*.html', browserSync.reload)
+}
+gulp.task(watch);
+
+
+gulp.task('default', watch);
