@@ -727,7 +727,7 @@ $select-background: #000
 	position: relative
 	&__bg
 		position: absolute
-		top: 100px
+		top: -280px
 		left: 50%
 		transform: translateX(-50%)
 		display: none
@@ -739,7 +739,7 @@ $select-background: #000
 		top: 0
 		left: 0
 		width: 100%
-		min-width: 1685px
+		// min-width: 1685px
 		width: 100%
 		object-fit: cover
 	
@@ -758,6 +758,8 @@ $select-background: #000
 		.service__bg
 			width: 105%
 			height: 105%
+		.service__description
+			opacity: 1
 
 	&:last-child
 		margin-right: 0
@@ -773,6 +775,27 @@ $select-background: #000
 		color: #ffffff
 		font-weight: 700
 		letter-spacing: -0.32px
+	
+	&__description
+		position: absolute
+		left: 0
+		right: 0
+		bottom: 0
+		top: 0
+		z-index: 2
+		font-size: 11pt
+		display: flex
+		flex-flow: column
+		align-items: center
+		justify-content: center
+		text-align: center
+		background: #fff
+		color:#666
+		border-radius: 10px
+		opacity: 0
+		transition: opacity .4s
+		padding: 30px
+
 	&__bg
 		position: absolute
 		top: 50%
@@ -894,7 +917,7 @@ $select-background: #000
 		top: -75px
 		left: 0
 		width: 100%
-		min-width: 1680px
+		// min-width: 1680px
 
 .rating
 	display: flex
@@ -965,7 +988,7 @@ $select-background: #000
 		top: -70%
 		left: 50%
 		transform: translateX(-50%)
-		min-width: 1680px
+		// min-width: 1680px
 		width: 100%
 		object-fit: cover
 	.container
@@ -1006,7 +1029,7 @@ $select-background: #000
 		top: -60px
 		left: 0
 		width: 100%
-		min-width: 1680px
+		// min-width: 1680px
 
 		object-fit: cover
 	&__block
@@ -1091,7 +1114,7 @@ $select-background: #000
 		width: 100%
 		object-fit: cover
 		z-index: 1
-		min-width: 1680px
+		//min-width: 1680px
 	p
 		margin-bottom: 25px
 	ul
@@ -1132,7 +1155,7 @@ $select-background: #000
 		top: 20px
 		left: 50%
 		width: 100%
-		min-width: 1680px
+		// min-width: 1680px
 		transform: translateX(-50%)
 	&__item
 		text-align: center
@@ -1213,7 +1236,7 @@ $select-background: #000
 		top: -150px
 		left: 0
 		position: absolute
-		min-width: 1748px
+		// min-width: 1748px
 		width: 100%
 		object-fit: cover
 	.col-12
@@ -1436,7 +1459,7 @@ $border: 1px solid #3b4360
 		left: 0
 		width: 100%
 		object-fit: cover
-		min-width: 1680px
+		// min-width: 1680px
 	.container
 		position: relative
 		z-index: 1
@@ -1665,6 +1688,7 @@ label.error
 // footer
 .footer
 	padding-bottom: 80px
+	padding-top: 80px
 	.logo
 		margin-bottom: 25px
 	.logo__title
