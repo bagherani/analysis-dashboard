@@ -246,36 +246,36 @@ $(function() {
 
 		// charts
 
-		var ctx = document.getElementById("myChart");
-		var myChart = new Chart(ctx, {
-			type: 'doughnut',
-			data: {
-				labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
-				datasets: [{
-					label: '# of Votes',
-					data: [15, 18, 13, 9, 10],
-					backgroundColor: [
-						'#ed804e',
-						'#e14251',
-						'#d047e4',
-						'#77075d',
-						'#ff457a',
-					],
+		// var ctx = document.getElementById("myChart");
+		// var myChart = new Chart(ctx, {
+		// 	type: 'doughnut',
+		// 	data: {
+		// 		labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+		// 		datasets: [{
+		// 			label: '# of Votes',
+		// 			data: [15, 18, 13, 9, 10],
+		// 			backgroundColor: [
+		// 				'#ed804e',
+		// 				'#e14251',
+		// 				'#d047e4',
+		// 				'#77075d',
+		// 				'#ff457a',
+		// 			],
 										
-				}]
-			},
-			options: {
-				legend: {
-					display: false
-				},
-				elements: {
-					arc: {
-					  borderColor: '#1f2641',
-					  borderWidth: 2
-					}
-				  }
-			}
-		});
+		// 		}]
+		// 	},
+		// 	options: {
+		// 		legend: {
+		// 			display: false
+		// 		},
+		// 		elements: {
+		// 			arc: {
+		// 			  borderColor: '#1f2641',
+		// 			  borderWidth: 2
+		// 			}
+		// 		  }
+		// 	}
+		// });
 
 		// jarallax
 		$('.jarallax').jarallax({
